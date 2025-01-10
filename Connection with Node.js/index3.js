@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors');
+
 const { MongoClient } = require('mongodb');
 
 const app = express();
@@ -6,11 +8,14 @@ const port = 3008;
 
 // MongoDB connection details
 // const uri = "mongodb://127.0.0.1:27017"; 
-const uri = "mongodb+srv://test1:kanishka123@cluster0.2lxux.mongodb.net/"
+// const uri = "mongodb+srv://test1:kanishka123@cluster0.2lxux.mongodb.net/"
+const uri = "mongodb+srv://test1:kanishka123@cluster0.2lxux.mongodb.net"
 const dbName = "codinggita";
 
 // Middleware
 app.use(express.json());
+app.use(cors());
+
 
 let db, students;
 
@@ -42,7 +47,7 @@ initializeDatabase();
 app.get('/students', async (req, res) => {
     try {
         const allstudents = await students.find().toArray();
-        res.status(400).json(allstudents);
+        res.status(200).json(allstudents);
     } catch (err) {
         res.status(500).send("Error fetching students: " + err.message);
     }
